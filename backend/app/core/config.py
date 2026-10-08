@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     frontend_url: str = "http://localhost:3000"
     # Comma separated list of additional origins allowed to call the API.
     extra_cors_origins: str = ""
+    # Optional pattern for origins that are not known in advance, such as
+    # Vercel preview deployments: https://.*\.vercel\.app
+    cors_origin_regex: str | None = None
 
     seed_on_startup: bool = True
 
