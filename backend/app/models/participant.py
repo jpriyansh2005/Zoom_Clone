@@ -39,7 +39,9 @@ class Participant(Base):
         ForeignKey("users.id", ondelete="SET NULL"), index=True
     )
     display_name: Mapped[str] = mapped_column(String(64))
-    role: Mapped[ParticipantRole] = mapped_column(enum_column(ParticipantRole))
+    role: Mapped[ParticipantRole] = mapped_column(
+        enum_column(ParticipantRole, "ck_participants_role")
+    )
     # Random secret handed to the browser on join. It proves who is opening
     # the WebSocket, since guests have no login.
     session_token: Mapped[str] = mapped_column(String(64), unique=True, index=True)
@@ -51,7 +53,3 @@ class Participant(Base):
 
     meeting: Mapped[Meeting] = relationship(back_populates="participants")
     user: Mapped[User | None] = relationship()
-
-    @property
-    def is_host(self) -> bool:
-        return self.role == ParticipantRole.HOST

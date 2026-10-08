@@ -52,8 +52,8 @@ class Meeting(Base):
 
     title: Mapped[str] = mapped_column(String(200))
     description: Mapped[str | None] = mapped_column(Text)
-    kind: Mapped[MeetingKind] = mapped_column(enum_column(MeetingKind))
-    status: Mapped[MeetingStatus] = mapped_column(enum_column(MeetingStatus))
+    kind: Mapped[MeetingKind] = mapped_column(enum_column(MeetingKind, "ck_meetings_kind"))
+    status: Mapped[MeetingStatus] = mapped_column(enum_column(MeetingStatus, "ck_meetings_status"))
 
     # Planned time, set for scheduled meetings only.
     scheduled_start: Mapped[datetime | None] = mapped_column(UTCDateTime)
