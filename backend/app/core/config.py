@@ -1,17 +1,22 @@
 """Application settings, read from environment variables (or a local .env file)."""
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# The backend/ folder. Paths are anchored here so the app behaves the same
+# no matter which directory it is started from.
+BACKEND_DIR = Path(__file__).resolve().parents[2]
+
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=BACKEND_DIR / ".env", extra="ignore")
 
     app_name: str = "Zoom Clone API"
     api_prefix: str = "/api/v1"
 
-    database_url: str = "sqlite:///./zoom.db"
+    database_url: str = f"sqlite:///{(BACKEND_DIR / 'zoom.db').as_posix()}"
 
     # Where the Next.js app is served: used for invite links and CORS.
     frontend_url: str = "http://localhost:3000"
