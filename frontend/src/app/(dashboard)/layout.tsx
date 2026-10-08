@@ -1,4 +1,5 @@
 import { DashboardProvider } from "@/components/dashboard/DashboardProvider";
+import { ServerWakingNotice } from "@/components/dashboard/ServerWakingNotice";
 import { TopNav } from "@/components/layout/TopNav";
 
 /**
@@ -11,6 +12,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <TopNav />
       {/* Bottom padding keeps content clear of the tab bar on phones. */}
       <main className="mx-auto w-full max-w-[1120px] px-4 pt-6 pb-24 sm:px-6 md:pt-10 md:pb-12">
+        <ServerWakingNotice />
         {children}
       </main>
     </DashboardProvider>
