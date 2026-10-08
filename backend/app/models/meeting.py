@@ -1,0 +1,87 @@
+from __future__ import annotations
+
+import enum
+from datetime import datetime, timedelta
+from typing import TYPE_CHECKING
+
+from sqlalchemy import CheckConstraint, ForeignKey, Index, String, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.core.time import utc_now
+from app.db.base import Base, UTCDateTime, enum_column
+
+if TYPE_CHECKING:
+    from app.models.participant import Participant
+    from app.models.user import User
+
+
+class MeetingKind(enum.StrEnum):
+    INSTANT = "instant"
+    SCHEDULED = "scheduled"
+
+
+class MeetingStatus(enum.StrEnum):
+    SCHEDULED = "scheduled"  # created for a future time, not started yet
+    LIVE = "live"  # the host has started it
+    ENDED = "ended"  # the host ended it for everyone
+
+
+class Meeting(Base):
+    """A meeting room, either started instantly or scheduled for later."""
+
+    __tablename__ = "meetings"
+    __table_args__ = (
+        CheckConstraint(
+            "duration_minutes IS NULL OR duration_minutes > 0",
+            name="ck_meetings_duration_positive",
+        ),
+        # A scheduled meeting must say when it starts and how long it lasts.
+        CheckConstraint(
+            "kind != 'scheduled' OR (scheduled_start IS NOT NULL AND duration_minutes IS NOT NULL)",
+            name="ck_meetings_scheduled_has_time",
+        ),
+        # The dashboard lists one host's meetings, filtered by status.
+        Index("ix_meetings_host_status", "host_id", "status"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    # The public "Meeting ID" people type to join, e.g. 86412345678. It is
+    # separate from the primary key so the row id never leaks into links.
+    code: Mapped[str] = mapped_column(String(11), unique=True, index=True)
+    host_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+
+    title: Mapped[str] = mapped_column(String(200))
+    description: Mapped[str | None] = mapped_column(Text)
+    kind: Mapped[MeetingKind] = mapped_column(enum_column(MeetingKind))
+    status: Mapped[MeetingStatus] = mapped_column(enum_column(MeetingStatus))
+
+    # Planned time, set for scheduled meetings only.
+    scheduled_start: Mapped[datetime | None] = mapped_column(UTCDateTime)
+    duration_minutes: Mapped[int | None] = mapped_column()
+
+    # What actually happened.
+    started_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+    ended_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utc_now)
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utc_now, onupdate=utc_now)
+
+    host: Mapped[User] = relationship(back_populates="hosted_meetings")
+    participants: Mapped[list[Participant]] = relationship(
+        back_populates="meeting", cascade="all, delete-orphan"
+    )
+
+    @property
+    def scheduled_end(self) -> datetime | None:
+        if self.scheduled_start is None or self.duration_minutes is None:
+            return None
+        return self.scheduled_start + timedelta(minutes=self.duration_minutes)
+
+    def is_upcoming(self, now: datetime) -> bool:
+        """A scheduled meeting stays "upcoming" until its planned end passes."""
+        return (
+            self.kind == MeetingKind.SCHEDULED
+            and self.status != MeetingStatus.ENDED
+            and self.scheduled_end is not None
+            and self.scheduled_end >= now
+        )
