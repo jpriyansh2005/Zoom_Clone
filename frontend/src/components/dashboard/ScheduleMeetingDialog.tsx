@@ -173,7 +173,7 @@ export function ScheduleMeetingDialog({ meeting, onClose, onSaved }: ScheduleMee
                 {(MINUTE_OPTIONS.includes(minutes) ? MINUTE_OPTIONS : [minutes, ...MINUTE_OPTIONS]).map(
                   (option) => (
                     <option key={option} value={option}>
-                      {option} minutes
+                      {option} min
                     </option>
                   ),
                 )}
