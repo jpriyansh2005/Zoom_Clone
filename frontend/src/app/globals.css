@@ -22,9 +22,8 @@
   --color-zoom-red: #e8173d;
   --color-zoom-red-hover: #cf1235;
   --color-zoom-green: #1fb866;
-  /* The blue of the "zoom" wordmark and the navy of "Workplace". */
+  /* The blue of the "zoom" wordmark. */
   --color-brand-blue: #0b5cff;
-  --color-brand-navy: #0d213f;
 
   /* Light surfaces: dashboard, dialogs, side panels */
   --color-ink: #222325;
@@ -53,7 +52,6 @@
   --color-room-red: #ff0055;
   --color-room-green: #00ff91;
 
-  --shadow-card: 0 1px 2px rgb(19 22 25 / 0.04);
   --shadow-popover: 0 8px 28px rgb(19 22 25 / 0.2);
 
   --animate-pop-in: pop-in 0.16s ease-out;

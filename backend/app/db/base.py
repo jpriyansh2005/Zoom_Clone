@@ -14,14 +14,15 @@ class Base(DeclarativeBase):
     pass
 
 
-def enum_column(enum_class: type[enum.Enum]) -> Enum:
+def enum_column(enum_class: type[enum.Enum], constraint_name: str) -> Enum:
     """Column type that stores an enum as its lowercase value.
 
     SQLite has no enum type, so this becomes a VARCHAR with a CHECK
-    constraint that only allows the enum's values.
+    constraint, named ``constraint_name``, that only allows the enum's values.
     """
     return Enum(
         enum_class,
+        name=constraint_name,
         native_enum=False,
         create_constraint=True,
         length=20,

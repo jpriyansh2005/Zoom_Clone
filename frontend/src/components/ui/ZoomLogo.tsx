@@ -3,10 +3,9 @@ import { cn } from "@/lib/cn";
 type ZoomLogoProps = {
   /**
    * "stacked" is the small two-line mark in the app's top bar.
-   * "inline" is the coloured wordmark with "Workplace" beside it.
    * "wordmark" is the blue "zoom" alone, as on Zoom's join pages.
    */
-  variant?: "stacked" | "inline" | "wordmark";
+  variant: "stacked" | "wordmark";
   className?: string;
 };
 
@@ -14,7 +13,7 @@ type ZoomLogoProps = {
  * The "zoom Workplace" mark. The wordmark is drawn here with simple strokes
  * (a z, two circles and an m), so no image file from Zoom is needed.
  */
-export function ZoomLogo({ variant = "inline", className }: ZoomLogoProps) {
+export function ZoomLogo({ variant, className }: ZoomLogoProps) {
   if (variant === "stacked") {
     return (
       <span
@@ -25,17 +24,7 @@ export function ZoomLogo({ variant = "inline", className }: ZoomLogoProps) {
       </span>
     );
   }
-  if (variant === "wordmark") {
-    return <Wordmark className={cn("h-[26px] text-brand-blue", className)} />;
-  }
-  return (
-    <span className={cn("inline-flex items-center gap-2 select-none", className)}>
-      <Wordmark className="h-[22px] text-brand-blue" />
-      <span className="text-[22px] leading-none font-semibold tracking-tight text-brand-navy">
-        Workplace
-      </span>
-    </span>
-  );
+  return <Wordmark className={cn("h-[26px] text-brand-blue", className)} />;
 }
 
 function Wordmark({ className }: { className?: string }) {

@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes } from "react";
 
 import { cn } from "@/lib/cn";
 
-type Variant = "primary" | "secondary" | "outline" | "danger" | "ghost";
+type Variant = "primary" | "secondary" | "outline" | "danger";
 type Size = "sm" | "md" | "lg";
 
 /**
@@ -14,7 +14,6 @@ const VARIANT_CLASSES: Record<Variant, string> = {
   secondary: "bg-hover text-zoom-blue hover:bg-line",
   outline: "border border-[#939ba4] bg-white text-ink hover:bg-hover",
   danger: "bg-zoom-red text-white hover:bg-zoom-red-hover",
-  ghost: "text-ink hover:bg-hover",
 };
 
 const SIZE_CLASSES: Record<Size, string> = {
