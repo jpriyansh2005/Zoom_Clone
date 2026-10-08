@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, type ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useEffectEvent,
+  useState,
+} from "react";
 
 import { useToast } from "@/components/ui/Toast";
 import { useFetch } from "@/hooks/useFetch";
@@ -67,6 +74,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const { isLaunching, startInstantMeeting, startMeeting } = useMeetingLauncher();
   const [dialog, setDialog] = useState<OpenDialog>(null);
   const showToast = useToast();
+
+  // Refresh the lists when the user comes back to this tab, for example
+  // after hosting a meeting in another one.
+  const reloadOnFocus = useEffectEvent(reload);
+  useEffect(() => {
+    const handleFocus = () => reloadOnFocus();
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, []);
 
   const closeDialog = () => setDialog(null);
 
