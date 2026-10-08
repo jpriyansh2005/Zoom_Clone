@@ -16,5 +16,5 @@ export const RoomGate = dynamic(() => import("./RoomGate").then((module) => modu
 
 export const PreJoin = dynamic(() => import("./PreJoin").then((module) => module.PreJoin), {
   ssr: false,
-  loading: () => <div className="h-dvh bg-canvas" />,
+  loading: () => <div className="h-dvh bg-white" />,
 });

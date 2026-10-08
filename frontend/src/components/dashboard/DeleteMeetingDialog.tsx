@@ -33,7 +33,7 @@ export function DeleteMeetingDialog({ meeting, onClose, onDeleted }: DeleteMeeti
   return (
     <Modal title="Delete meeting" onClose={onClose} widthClassName="max-w-[420px]">
       <p className="text-sm text-ink-muted">
-        Delete <span className="font-bold text-ink">{meeting.title}</span>? Its meeting ID and
+        Delete <span className="font-semibold text-ink">{meeting.title}</span>? Its meeting ID and
         invite link will stop working. This can&apos;t be undone.
       </p>
       {error && (

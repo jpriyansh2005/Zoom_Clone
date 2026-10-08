@@ -53,8 +53,8 @@ export function MeetingActionsMenu({ meeting }: { meeting: Meeting }) {
   return (
     <DropdownMenu
       label={`More actions for ${meeting.title}`}
-      trigger={<Ellipsis size={18} />}
-      triggerClassName="flex size-8 items-center justify-center rounded-lg text-ink-muted hover:bg-line/70 hover:text-ink"
+      trigger={<Ellipsis size={16} />}
+      triggerClassName="flex size-7 items-center justify-center rounded-md text-ink-muted hover:bg-line hover:text-ink"
       items={items}
     />
   );

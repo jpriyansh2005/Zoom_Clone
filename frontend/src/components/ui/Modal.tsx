@@ -43,14 +43,14 @@ export function Modal({ title, onClose, children, widthClassName = "max-w-md" }:
       onCancel={onClose} // fired by the Escape key
       onClick={closeWhenBackdropClicked}
       className={cn(
-        "m-auto w-[calc(100%-2rem)] rounded-2xl bg-white p-0 text-ink shadow-popover",
-        "animate-pop-in backdrop:bg-black/45",
+        "m-auto w-[calc(100%-2rem)] rounded-[28px] bg-white p-0 text-ink shadow-popover",
+        "animate-pop-in backdrop:bg-black/20",
         widthClassName,
       )}
     >
       <div className="flex max-h-[calc(100dvh-2rem)] flex-col">
-        <header className="flex items-center justify-between px-6 pt-5 pb-3">
-          <h2 className="text-lg font-bold">{title}</h2>
+        <header className="flex items-center justify-between px-8 pt-7 pb-4">
+          <h2 className="text-xl font-bold">{title}</h2>
           <button
             type="button"
             onClick={onClose}
@@ -60,7 +60,7 @@ export function Modal({ title, onClose, children, widthClassName = "max-w-md" }:
             <X size={18} />
           </button>
         </header>
-        <div className="thin-scrollbar overflow-y-auto px-6 pb-6">{children}</div>
+        <div className="thin-scrollbar overflow-y-auto px-8 pb-8">{children}</div>
       </div>
     </dialog>
   );

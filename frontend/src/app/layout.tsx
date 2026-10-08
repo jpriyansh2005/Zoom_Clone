@@ -1,16 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Lato } from "next/font/google";
 
 import { ToastProvider } from "@/components/ui/Toast";
 
 import "./globals.css";
-
-// Lato is the fallback in Zoom's own font stack, after its private typeface.
-const lato = Lato({
-  variable: "--font-lato",
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -23,12 +15,14 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#ffffff",
+  themeColor: "#dfe2e7",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  // No web font is loaded: like Zoom's web app, the page uses the system
+  // font (see --font-sans in globals.css).
   return (
-    <html lang="en" className={`${lato.variable} antialiased`}>
+    <html lang="en" className="antialiased">
       <body>
         <ToastProvider>{children}</ToastProvider>
       </body>

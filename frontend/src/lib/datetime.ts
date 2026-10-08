@@ -16,6 +16,16 @@ export function formatLongDate(date: Date): string {
   return date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 }
 
+/** "Thursday, May 21, 2026", as under the clock on Zoom's home screen. */
+export function formatLongDateWithYear(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 /** "Oct 9, 2026" */
 export function formatShortDate(date: Date): string {
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -23,11 +33,23 @@ export function formatShortDate(date: Date): string {
 
 /** "Today", "Tomorrow", "Yesterday" or "Mon, Oct 12". */
 export function formatDayLabel(date: Date, now: Date = new Date()): string {
-  const dayDifference = Math.round((startOfDay(date) - startOfDay(now)) / DAY_MS);
+  const dayDifference = Math.round(
+    (startOfDay(date).getTime() - startOfDay(now).getTime()) / DAY_MS,
+  );
   if (dayDifference === 0) return "Today";
   if (dayDifference === 1) return "Tomorrow";
   if (dayDifference === -1) return "Yesterday";
   return date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+
+/**
+ * Heading of the home screen's calendar card: "Today, Oct 9",
+ * "Tomorrow, Oct 10", then "Mon, Oct 12" for later days.
+ */
+export function formatAgendaDate(date: Date, now: Date = new Date()): string {
+  const label = formatDayLabel(date, now);
+  if (label !== "Today" && label !== "Tomorrow" && label !== "Yesterday") return label;
+  return `${label}, ${date.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
 }
 
 /** "10:00 AM - 10:45 AM" */
@@ -98,6 +120,14 @@ export function localTimeZone(): string {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 
-function startOfDay(date: Date): number {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+/** Midnight at the start of the given day, in the viewer's timezone. */
+export function startOfDay(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+/** The same time of day, a number of days later (or earlier, if negative). */
+export function addDays(date: Date, days: number): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
 }

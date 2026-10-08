@@ -19,7 +19,7 @@ export function SidePanelFrame({ title, onClose, children, footer }: SidePanelFr
       className="fixed inset-0 z-30 flex flex-col bg-white text-ink md:static md:z-auto md:w-[340px] md:shrink-0 md:rounded-xl"
     >
       <header className="flex h-12 shrink-0 items-center justify-between border-b border-line pr-2 pl-4">
-        <h2 className="text-[15px] font-bold">{title}</h2>
+        <h2 className="text-sm font-semibold">{title}</h2>
         <button
           type="button"
           onClick={onClose}

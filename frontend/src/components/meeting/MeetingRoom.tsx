@@ -76,6 +76,11 @@ export function MeetingRoom({ session }: { session: StoredSession }) {
     showToast(copied ? "Invite link copied to clipboard" : "Couldn't copy the invite link");
   }
 
+  function muteAll() {
+    room.muteAll();
+    showToast("All participants have been muted");
+  }
+
   function leave() {
     clearSession(meeting.code);
     router.push("/");
@@ -101,7 +106,7 @@ export function MeetingRoom({ session }: { session: StoredSession }) {
     <div className="flex h-dvh flex-col bg-room">
       <MeetingHeader meeting={meeting} status={room.status} />
 
-      <div className="flex min-h-0 flex-1 gap-2 px-2 pb-2">
+      <div className="flex min-h-0 flex-1 gap-2 p-2">
         <main className="relative flex min-w-0 flex-1">
           <VideoGrid
             participants={room.participants}
@@ -120,7 +125,7 @@ export function MeetingRoom({ session }: { session: StoredSession }) {
                 setSoundBlocked(false);
                 setSoundRetryKey((key) => key + 1);
               }}
-              className="absolute top-3 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-zoom-blue px-4 py-2 text-sm font-bold text-white shadow-popover hover:bg-zoom-blue-hover"
+              className="absolute top-3 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-zoom-blue px-4 py-2 text-sm font-medium text-white shadow-popover hover:bg-zoom-blue-hover"
             >
               <Volume2 size={16} />
               Click to hear others
@@ -137,10 +142,7 @@ export function MeetingRoom({ session }: { session: StoredSession }) {
             isHost={isHost}
             onClose={() => setActivePanel(null)}
             onInvite={copyInviteLink}
-            onMuteAll={() => {
-              room.muteAll();
-              showToast("All participants have been muted");
-            }}
+            onMuteAll={muteAll}
             onMute={room.muteParticipant}
             onRemove={room.removeParticipant}
           />
@@ -164,6 +166,7 @@ export function MeetingRoom({ session }: { session: StoredSession }) {
         onTogglePanel={togglePanel}
         onReact={room.sendReaction}
         onCopyInviteLink={copyInviteLink}
+        onMuteAll={muteAll}
         onLeave={leave}
         onEndForAll={endForAll}
       />

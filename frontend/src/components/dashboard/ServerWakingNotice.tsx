@@ -30,7 +30,7 @@ export function ServerWakingNotice() {
   return (
     <p
       role="status"
-      className="mb-6 flex items-center gap-3 rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink-muted shadow-card"
+      className="mt-4 flex items-center gap-3 rounded-lg border border-line bg-canvas px-4 py-3 text-[13px] text-ink-muted"
     >
       <Spinner className="size-4 shrink-0 text-zoom-blue" />
       Waking up the server. On free hosting the first load can take up to a minute.

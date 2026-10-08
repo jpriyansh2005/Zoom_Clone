@@ -23,8 +23,8 @@ Built for the Scaler SDE Fullstack assignment.
 
 | Requirement | Where to see it |
 |---|---|
-| **Landing dashboard** with Zoom's look | Home: navbar with search, settings and profile menu; New meeting, Join, Schedule and Share screen tiles |
-| Upcoming meetings section | Card on the right of Home, grouped by day; full list under Meetings > Upcoming |
+| **Landing dashboard** with Zoom's look | Home: Zoom Workplace's top bar (search, notifications, profile menu) and navigation rail (settings at the bottom); clock; New meeting, Join, Schedule and Share screen tiles |
+| Upcoming meetings section | The calendar card on Home, grouped by day, with Today / previous / next day controls; full list under Meetings > Upcoming |
 | Recent meetings section | "Recent meetings" on Home; full list under Meetings > Previous |
 | **Instant meeting**: unique ID, invite link, redirect to the room | New meeting creates an 11-digit meeting ID and a `/j/{id}` link, then opens the room |
 | **Join** by meeting ID or invite link | The Join dialog accepts either; opening an invite link goes to a pre-join screen |
@@ -51,6 +51,42 @@ Built for the Scaler SDE Fullstack assignment.
 - Edit and delete scheduled meetings; copy the invitation or meeting ID
 - Reconnects automatically after a network drop; a page refresh keeps your
   place in the meeting
+
+## How closely it matches Zoom
+
+The interface was built against Zoom's own material, not from memory:
+
+| What | Compared with | How |
+|---|---|---|
+| Home screen layout: top bar, navigation rail, clock, action tiles, calendar card | The home-tab screenshot in Zoom's support article "Getting started with the Zoom Workplace desktop app" | Sizes and positions read off the screenshot; colours sampled from its pixels |
+| Meeting toolbar, title bar, video tiles and name labels | The in-meeting screenshot in the same article | Colours sampled from its pixels; labels and order copied |
+| Font, buttons, text fields and dialogs | The live Zoom web app at app.zoom.us | Values read from its stylesheet in a browser |
+
+Measured values used in the app include the grey frame `#DFE2E7`, the tile
+orange `#FF5F0F`, the button blue `#0D6BDE`, the meeting background `#131619`,
+the in-meeting red `#FF0055`, 40px inputs with 12px corners, and Zoom's own
+font stack (the system font: Segoe UI on Windows, SF Pro on macOS).
+
+It is not pixel-identical. Known differences:
+
+- **Icons and logo.** Zoom's icon set and wordmark are proprietary. The app
+  uses an open-source icon set (Lucide), four hand-drawn tile glyphs and a
+  wordmark drawn with simple strokes, so shapes are close but not the same.
+- **Recent meetings card.** Zoom's home screen has no such card; it is here
+  because the assignment asks for one on the dashboard.
+- **Calendar card.** Zoom shows one day at a time from a connected calendar.
+  Here the card lists upcoming meetings from the selected day onward, so a
+  meeting scheduled for next week is visible without paging to it.
+- **Join dialog.** Zoom's asks only for the meeting ID. This one also asks
+  for a display name, which the assignment requires.
+- **Left out.** The "My notes" tile, AI Companion, whiteboard, recording,
+  breakout rooms, waiting room and the green outline around the person
+  speaking.
+- **Not compared.** Zoom's schedule form, its pre-join screen and its
+  participants and chat panels are only visible after signing in or joining a
+  real meeting, so those screens follow Zoom's general style rather than a
+  measured reference. Zoom has no browser layout for phones (it has native
+  apps), so the phone layout is this project's own adaptation.
 
 ## Tech stack
 
