@@ -2,7 +2,6 @@
 
 import { MicOff } from "lucide-react";
 
-import { Avatar } from "@/components/ui/Avatar";
 import type { Reaction } from "@/hooks/useMeetingRoom";
 
 import { MediaPlayer } from "./MediaPlayer";
@@ -10,7 +9,6 @@ import { MediaPlayer } from "./MediaPlayer";
 type VideoTileProps = {
   name: string;
   isSelf: boolean;
-  isHost: boolean;
   audioOn: boolean;
   /** Whether a camera picture should be visible. */
   videoOn: boolean;
@@ -23,11 +21,13 @@ type VideoTileProps = {
   onAutoplayBlocked: () => void;
 };
 
-/** One person in the gallery: their video, or their initials when it is off. */
+/**
+ * One person in the gallery. With the camera off Zoom shows the person's
+ * name in the middle of a dark tile, and that is what this does too.
+ */
 export function VideoTile({
   name,
   isSelf,
-  isHost,
   audioOn,
   videoOn,
   isSharingScreen,
@@ -39,13 +39,9 @@ export function VideoTile({
   onAutoplayBlocked,
 }: VideoTileProps) {
   const showsPicture = videoOn || isSharingScreen;
-  const label = [name, isSelf && "(You)", isHost && "· Host"].filter(Boolean).join(" ");
 
   return (
-    <div
-      className="relative overflow-hidden rounded-xl bg-room-tile"
-      style={{ width, height }}
-    >
+    <div className="relative overflow-hidden rounded-xl bg-room-tile" style={{ width, height }}>
       <MediaPlayer
         source={source}
         muted={isSelf}
@@ -57,14 +53,18 @@ export function VideoTile({
       />
 
       {!showsPicture && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Avatar name={name} size={Math.max(48, Math.min(height * 0.36, 128))} />
-        </div>
+        <p
+          className="absolute inset-0 flex items-center justify-center px-6 text-center font-medium text-white"
+          // Scale the name with the tile, within sensible limits.
+          style={{ fontSize: Math.max(16, Math.min(height * 0.11, 34)) }}
+        >
+          <span className="line-clamp-2">{name}</span>
+        </p>
       )}
 
-      <div className="absolute bottom-2 left-2 flex max-w-[calc(100%-1rem)] items-center gap-1.5 rounded-md bg-black/60 px-2 py-1 text-[13px] leading-none text-white">
-        {!audioOn && <MicOff size={13} className="shrink-0 text-zoom-red" aria-label="Muted" />}
-        <span className="truncate">{label}</span>
+      <div className="absolute bottom-1.5 left-1.5 flex max-w-[calc(100%-0.75rem)] items-center gap-1.5 rounded-lg bg-[#17181a]/90 px-2 py-1 text-[13px] leading-5 font-semibold text-white">
+        {!audioOn && <MicOff size={14} className="shrink-0 text-room-red" aria-label="Muted" />}
+        <span className="truncate">{name}</span>
       </div>
 
       {reactions.map((reaction) => (

@@ -33,7 +33,7 @@ export function PreJoin({ code }: { code: string }) {
 
   if (loading) {
     return (
-      <div className="flex h-dvh items-center justify-center bg-canvas text-zoom-blue">
+      <div className="flex h-dvh items-center justify-center bg-white text-zoom-blue">
         <Spinner className="size-7" />
       </div>
     );
@@ -84,17 +84,17 @@ function PreJoinForm({ meeting }: { meeting: Meeting }) {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col bg-canvas">
-      <header className="flex h-16 shrink-0 items-center border-b border-line bg-white px-4 sm:px-6">
+    <div className="flex min-h-dvh flex-col bg-white">
+      <header className="flex h-16 shrink-0 items-center border-b border-line px-4 sm:px-6">
         <Link href="/" aria-label="Zoom home" className="rounded-md">
-          <ZoomLogo withProduct />
+          <ZoomLogo />
         </Link>
       </header>
 
       <main className="flex flex-1 items-center justify-center px-4 py-8">
         <div className="grid w-full max-w-[920px] items-center gap-8 md:grid-cols-[minmax(0,1fr)_340px]">
           <section aria-label="Camera preview">
-            <div className="relative aspect-video overflow-hidden rounded-2xl bg-room-tile shadow-card">
+            <div className="relative aspect-video overflow-hidden rounded-2xl bg-room-tile">
               <MediaPlayer source={media.cameraTrack} muted mirrored hidden={!media.videoOn} />
               {!media.videoOn && (
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -131,7 +131,7 @@ function PreJoinForm({ meeting }: { meeting: Meeting }) {
               Hosted by {meeting.host.name} · Meeting ID {formatMeetingCode(meeting.code)}
             </p>
 
-            <label htmlFor="prejoin-name" className="mt-7 mb-1.5 block text-[13px] font-bold">
+            <label htmlFor="prejoin-name" className="mt-7 mb-1.5 block text-sm">
               Your name
             </label>
             <input
@@ -141,7 +141,7 @@ function PreJoinForm({ meeting }: { meeting: Meeting }) {
               placeholder="Enter your name"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              className={cn(inputClassName, "h-11")}
+              className={inputClassName}
             />
             {error && (
               <p role="alert" className="mt-2 text-[13px] text-zoom-red">
@@ -184,7 +184,7 @@ function PreviewToggle({ label, isOn, onClick, iconOn, iconOff }: PreviewToggleP
       onClick={onClick}
       className={cn(
         "flex size-11 items-center justify-center rounded-full text-white transition-colors",
-        isOn ? "bg-white/20 backdrop-blur hover:bg-white/30" : "bg-zoom-red hover:bg-zoom-red-hover",
+        isOn ? "bg-white/20 backdrop-blur hover:bg-white/30" : "bg-room-red hover:opacity-90",
       )}
     >
       {isOn ? iconOn : iconOff}

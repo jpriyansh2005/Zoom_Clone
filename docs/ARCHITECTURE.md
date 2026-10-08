@@ -242,13 +242,16 @@ src/app/                 Routes (Next.js App Router)
   meeting/[code]/        The meeting room
 src/components/
   ui/                    Generic pieces: Button, Modal, Popover, Toast...
-  layout/                Navbar
+  layout/                The app frame: top bar and navigation rail
   dashboard/             Tiles, lists, dialogs
   meeting/               Room, toolbar, panels, video tiles
 src/hooks/               Stateful logic shared by components
 src/lib/                 Plain TypeScript with no React: API client, formatting, WebRTC
 ```
 
+- **The look is measured, not guessed.** Colours, sizes and the font stack in
+  `app/globals.css` were taken from Zoom's own screenshots and web app; the
+  README lists the sources and the known differences.
 - **It behaves as a single page application.** Pages fetch from the API in the
   browser and move between routes without reloading. The meeting screens are
   loaded with `ssr: false` because they need the camera, `sessionStorage` and

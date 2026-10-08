@@ -27,7 +27,7 @@ export function RecentMeetings({ limit }: RecentMeetingsProps) {
     );
   }
   return (
-    <ul className="pb-2">
+    <ul className="py-1.5">
       {shown.map((meeting) => (
         <RecentMeetingRow key={meeting.id} meeting={meeting} />
       ))}

@@ -48,11 +48,11 @@ export function ParticipantsPanel({
       onClose={onClose}
       footer={
         <div className="flex gap-2">
-          <Button variant="secondary" size="sm" onClick={onInvite} className="flex-1">
+          <Button variant="outline" size="sm" onClick={onInvite} className="flex-1">
             Invite
           </Button>
           {isHost && (
-            <Button variant="secondary" size="sm" onClick={onMuteAll} className="flex-1">
+            <Button variant="outline" size="sm" onClick={onMuteAll} className="flex-1">
               Mute all
             </Button>
           )}
@@ -91,7 +91,7 @@ export function ParticipantsPanel({
                     size="sm"
                     variant="secondary"
                     onClick={() => setPendingRemoval(participant)}
-                    className="h-7 px-2.5 text-zoom-red"
+                    className="h-7 px-2.5 text-zoom-red hover:text-zoom-red"
                   >
                     Remove
                   </Button>

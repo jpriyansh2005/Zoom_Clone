@@ -70,7 +70,7 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
   return (
     <div className="grid grid-cols-[92px_1fr] gap-3">
       <dt className="text-ink-muted">{label}</dt>
-      <dd className="min-w-0 font-bold">{children}</dd>
+      <dd className="min-w-0 font-semibold">{children}</dd>
     </div>
   );
 }

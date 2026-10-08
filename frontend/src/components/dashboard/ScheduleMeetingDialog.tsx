@@ -92,7 +92,7 @@ export function ScheduleMeetingDialog({ meeting, onClose, onSaved }: ScheduleMee
 
   return (
     <Modal
-      title={isEdit ? "Edit meeting" : "Schedule meeting"}
+      title={isEdit ? "Edit Meeting" : "Schedule Meeting"}
       onClose={onClose}
       widthClassName="max-w-[520px]"
     >
@@ -181,13 +181,13 @@ export function ScheduleMeetingDialog({ meeting, onClose, onSaved }: ScheduleMee
             </div>
           </Field>
           <div>
-            <p className="mb-1.5 text-[13px] font-bold">Time zone</p>
+            <p className="mb-1.5 text-sm">Time zone</p>
             <p className="flex h-10 items-center text-sm text-ink-muted">{localTimeZone()}</p>
           </div>
         </div>
 
         <div>
-          <p className="mb-1.5 text-[13px] font-bold">Meeting ID</p>
+          <p className="mb-1.5 text-sm">Meeting ID</p>
           <p className="text-sm text-ink-muted">
             {isEdit
               ? "The meeting ID and invite link stay the same."

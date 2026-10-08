@@ -9,7 +9,7 @@ import type { RoomParticipant } from "@/lib/types";
 
 import { VideoTile } from "./VideoTile";
 
-const GAP = 8;
+const GAP = 6;
 
 type VideoGridProps = {
   participants: RoomParticipant[];
@@ -61,7 +61,6 @@ export function VideoGrid({
               key={participant.id}
               name={participant.display_name}
               isSelf={isSelf}
-              isHost={participant.role === "host"}
               // Our own tile reads the devices directly, so it updates
               // instantly instead of waiting for the server to echo it back.
               audioOn={isSelf ? media.audioOn : participant.audio}

@@ -15,7 +15,7 @@ import type { Meeting } from "@/lib/types";
 import { useDashboard } from "./DashboardProvider";
 import { MeetingActionsMenu } from "./MeetingActionsMenu";
 
-const ROW_CLASS = "flex items-center gap-3 px-5 py-3.5 transition-colors hover:bg-hover/70";
+const ROW_CLASS = "flex items-center gap-2.5 px-4 py-2.5 transition-colors hover:bg-hover/70";
 
 /** A scheduled meeting that has not finished: time, topic, ID and "Start". */
 export function UpcomingMeetingRow({ meeting }: { meeting: Meeting }) {
@@ -27,12 +27,12 @@ export function UpcomingMeetingRow({ meeting }: { meeting: Meeting }) {
   return (
     <li className={ROW_CLASS}>
       <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 text-[13px] text-ink-muted">
+        <p className="flex items-center gap-2 text-[12px] text-ink-muted">
           {formatTimeRange(start, meeting.duration_minutes ?? 0)}
           {isLive && <StatusChip tone="live">Live</StatusChip>}
         </p>
-        <p className="truncate text-[15px] font-bold">{meeting.title}</p>
-        <p className="text-[13px] text-ink-muted">Meeting ID: {formatMeetingCode(meeting.code)}</p>
+        <p className="truncate text-sm font-semibold">{meeting.title}</p>
+        <p className="text-[12px] text-ink-muted">Meeting ID: {formatMeetingCode(meeting.code)}</p>
       </div>
       <Button size="sm" disabled={isLaunching} onClick={() => startMeeting(meeting)}>
         {isLive ? "Rejoin" : "Start"}
@@ -53,8 +53,8 @@ export function RecentMeetingRow({ meeting }: { meeting: Meeting }) {
   return (
     <li className={ROW_CLASS}>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[15px] font-bold">{meeting.title}</p>
-        <p className="truncate text-[13px] text-ink-muted">
+        <p className="truncate text-sm font-semibold">{meeting.title}</p>
+        <p className="truncate text-[12px] text-ink-muted">
           {formatDayLabel(when)}, {formatTime(when)}
           {" · "}
           {recentDuration(meeting)}
@@ -87,7 +87,7 @@ function StatusChip({ tone, children }: { tone: "live" | "neutral"; children: Re
   return (
     <span
       className={cn(
-        "rounded-full px-2 py-0.5 text-[11px] leading-4 font-bold whitespace-nowrap",
+        "rounded-full px-2 py-0.5 text-[11px] leading-4 font-medium whitespace-nowrap",
         tone === "live" ? "bg-zoom-green/15 text-[#0f8a48]" : "bg-canvas text-ink-muted",
       )}
     >

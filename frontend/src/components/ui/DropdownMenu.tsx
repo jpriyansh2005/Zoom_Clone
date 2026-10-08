@@ -55,7 +55,7 @@ export function DropdownMenu({
         <div
           role="menu"
           className={cn(
-            "absolute top-full z-30 mt-1.5 min-w-48 animate-pop-in rounded-xl border border-line bg-white py-1.5 shadow-popover",
+            "absolute top-full z-30 mt-1.5 min-w-48 animate-pop-in rounded-xl border border-line bg-white py-1.5 text-ink shadow-popover",
             align === "right" ? "right-0" : "left-0",
           )}
         >
@@ -70,7 +70,7 @@ export function DropdownMenu({
                 item.onSelect();
               }}
               className={cn(
-                "flex w-full items-center gap-2.5 px-4 py-2 text-left text-sm whitespace-nowrap hover:bg-hover",
+                "flex w-full items-center gap-2.5 px-4 py-1.5 text-left text-[13px] whitespace-nowrap hover:bg-hover",
                 item.danger ? "text-zoom-red" : "text-ink",
               )}
             >

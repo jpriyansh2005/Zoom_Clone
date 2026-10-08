@@ -7,7 +7,7 @@ export function ListSkeleton({ rows = 3 }: { rows?: number }) {
   return (
     <ul aria-busy="true" aria-label="Loading meetings">
       {Array.from({ length: rows }, (_, index) => (
-        <li key={index} className="animate-pulse space-y-2 px-5 py-4">
+        <li key={index} className="animate-pulse space-y-2 px-4 py-3">
           <div className="h-3 w-28 rounded bg-line" />
           <div className="h-4 w-48 rounded bg-line" />
           <div className="h-3 w-36 rounded bg-line" />
@@ -26,10 +26,10 @@ type EmptyStateProps = {
 export function EmptyState({ icon: Icon, title, hint }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center px-6 py-10 text-center">
-      <span className="mb-3 flex size-12 items-center justify-center rounded-full bg-canvas text-ink-faint">
+      <span className="mb-3 flex size-12 items-center justify-center rounded-full bg-zoom-blue-soft text-zoom-blue">
         <Icon size={22} />
       </span>
-      <p className="text-sm font-bold">{title}</p>
+      <p className="text-[13px] font-semibold">{title}</p>
       {hint && <p className="mt-1 text-[13px] text-ink-muted">{hint}</p>}
     </div>
   );

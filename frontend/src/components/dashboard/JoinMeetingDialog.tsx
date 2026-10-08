@@ -17,7 +17,11 @@ type JoinMeetingDialogProps = {
   onClose: () => void;
 };
 
-/** Zoom's "Join meeting" dialog: a meeting ID or link, a name, two options. */
+/**
+ * Zoom's "Join Meeting" dialog. Zoom's own asks only for the meeting ID;
+ * the name and the two options are here because the assignment requires a
+ * display name before joining.
+ */
 export function JoinMeetingDialog({ defaultName, onClose }: JoinMeetingDialogProps) {
   const router = useRouter();
   const [meetingInput, setMeetingInput] = useState("");
@@ -53,9 +57,9 @@ export function JoinMeetingDialog({ defaultName, onClose }: JoinMeetingDialogPro
   }
 
   return (
-    <Modal title="Join meeting" onClose={onClose} widthClassName="max-w-[400px]">
+    <Modal title="Join Meeting" onClose={onClose} widthClassName="max-w-[448px]">
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Field label="Meeting ID or personal link name" htmlFor="join-meeting-id" error={error}>
+        <Field label="Meeting ID or Personal Link Name" htmlFor="join-meeting-id" error={error}>
           <input
             id="join-meeting-id"
             autoFocus
