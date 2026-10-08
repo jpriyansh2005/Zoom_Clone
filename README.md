@@ -61,6 +61,8 @@ The interface was built against Zoom's own material, not from memory:
 | Home screen layout: top bar, navigation rail, clock, action tiles, calendar card | The home-tab screenshot in Zoom's support article "Getting started with the Zoom Workplace desktop app" | Sizes and positions read off the screenshot; colours sampled from its pixels |
 | Meeting toolbar, title bar, video tiles and name labels | The in-meeting screenshot in the same article | Colours sampled from its pixels; labels and order copied |
 | Font, buttons, text fields and dialogs | The live Zoom web app at app.zoom.us | Values read from its stylesheet in a browser |
+| Pre-join screen ("Enter Meeting Info") | The same screen of Zoom's web client, opened from Zoom's public test meeting | Element sizes and positions read from the live page: a 700 x 394 preview and a 400px form |
+| Full-page notices (meeting ended, invalid link) | Zoom's "Join meeting" launch page | Layout copied: wordmark header, centred heading, 400px button |
 
 Measured values used in the app include the grey frame `#DFE2E7`, the tile
 orange `#FF5F0F`, the button blue `#0D6BDE`, the meeting background `#131619`,
@@ -82,11 +84,15 @@ It is not pixel-identical. Known differences:
 - **Left out.** The "My notes" tile, AI Companion, whiteboard, recording,
   breakout rooms, waiting room and the green outline around the person
   speaking.
-- **Not compared.** Zoom's schedule form, its pre-join screen and its
-  participants and chat panels are only visible after signing in or joining a
-  real meeting, so those screens follow Zoom's general style rather than a
-  measured reference. Zoom has no browser layout for phones (it has native
-  apps), so the phone layout is this project's own adaptation.
+- **Pre-join screen.** Zoom first asks "Do you want people to see you in the
+  meeting?" in a dialog; here the browser's own permission prompt does that
+  job. Zoom's legal text is replaced with this project's own wording.
+- **Not compared.** Zoom's schedule form and its in-meeting participants and
+  chat panels are only visible after signing in or joining a real meeting
+  (joining is protected by bot detection, which was not bypassed), so those
+  screens follow Zoom's general style rather than a measured reference.
+  Zoom has no browser layout for phones (it has native apps), so the phone
+  layout is this project's own adaptation.
 
 ## Tech stack
 

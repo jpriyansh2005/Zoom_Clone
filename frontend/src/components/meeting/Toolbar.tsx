@@ -26,7 +26,7 @@ export type SidePanel = "participants" | "chat";
 const REACTIONS = ["👏", "👍", "❤️", "😂", "😮", "🎉"];
 
 const BUTTON_CLASS =
-  "group relative flex h-14 w-12 flex-col items-center justify-center gap-1.5 rounded-lg " +
+  "group relative flex h-[58px] w-12 flex-col items-center justify-center gap-1.5 rounded-lg " +
   "text-white transition-colors hover:bg-room-hover sm:w-[72px]";
 const MENU_CLASS =
   "rounded-xl border border-room-line bg-[#1f2124] text-[13px] text-room-text shadow-popover";
@@ -239,7 +239,7 @@ export function Toolbar({
         trigger={
           <>
             <EndIcon />
-            <span className="hidden text-[12px] leading-none text-room-muted sm:block">
+            <span className="hidden text-[13px] leading-none text-room-muted sm:block">
               {isHost ? "End" : "Leave"}
             </span>
           </>
@@ -294,11 +294,11 @@ function ButtonFace({ label, icon: Icon, slashed, hasCaret, count, unread = 0 }:
     <>
       <span className="relative flex h-6 items-center gap-0.5">
         <span className="relative flex items-center justify-center">
-          <Icon size={23} strokeWidth={1.6} />
+          <Icon size={25} strokeWidth={1.5} />
           {slashed && (
             <span
               aria-hidden
-              className="absolute h-[2px] w-[30px] -rotate-45 rounded-full bg-room-red"
+              className="absolute h-[2px] w-[32px] -rotate-45 rounded-full bg-room-red"
             />
           )}
         </span>
@@ -319,7 +319,7 @@ function ButtonFace({ label, icon: Icon, slashed, hasCaret, count, unread = 0 }:
           </span>
         )}
       </span>
-      <span className="hidden text-[12px] leading-none text-room-muted sm:block">{label}</span>
+      <span className="hidden text-[13px] leading-none text-room-muted sm:block">{label}</span>
     </>
   );
 }
@@ -349,7 +349,7 @@ function ToolbarButton({ onClick, actionLabel, active = false, ...face }: Toolba
 /** Zoom's End button: a red hexagon with a white cross. */
 function EndIcon(): ReactNode {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden className="size-6">
+    <svg viewBox="0 0 24 24" aria-hidden className="size-[26px]">
       <path
         d="M7.2 3.6h9.6L21.6 12l-4.8 8.4H7.2L2.4 12z"
         className="fill-none stroke-room-red"
