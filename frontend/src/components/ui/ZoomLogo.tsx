@@ -3,9 +3,10 @@ import { cn } from "@/lib/cn";
 type ZoomLogoProps = {
   /**
    * "stacked" is the small two-line mark in the app's top bar.
-   * "inline" is the coloured wordmark used on standalone pages.
+   * "inline" is the coloured wordmark with "Workplace" beside it.
+   * "wordmark" is the blue "zoom" alone, as on Zoom's join pages.
    */
-  variant?: "stacked" | "inline";
+  variant?: "stacked" | "inline" | "wordmark";
   className?: string;
 };
 
@@ -23,6 +24,9 @@ export function ZoomLogo({ variant = "inline", className }: ZoomLogoProps) {
         <span className="mt-[3px] text-[13px] leading-none font-bold tracking-tight">Workplace</span>
       </span>
     );
+  }
+  if (variant === "wordmark") {
+    return <Wordmark className={cn("h-[26px] text-brand-blue", className)} />;
   }
   return (
     <span className={cn("inline-flex items-center gap-2 select-none", className)}>

@@ -45,9 +45,11 @@ export function rememberedDisplayName(): string {
   }
 }
 
+/** Remember the name for next time. An empty name forgets it. */
 export function rememberDisplayName(name: string): void {
   try {
-    localStorage.setItem(NAME_KEY, name);
+    if (name) localStorage.setItem(NAME_KEY, name);
+    else localStorage.removeItem(NAME_KEY);
   } catch {
     // Storage can be disabled (private mode); remembering is only a convenience.
   }
