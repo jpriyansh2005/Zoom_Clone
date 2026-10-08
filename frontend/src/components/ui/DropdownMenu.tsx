@@ -1,7 +1,8 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 
+import { useDismiss } from "@/hooks/useDismiss";
 import { cn } from "@/lib/cn";
 
 export type MenuItem = {
@@ -35,24 +36,7 @@ export function DropdownMenu({
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // While open, close on a click anywhere else or on Escape.
-  useEffect(() => {
-    if (!isOpen) return;
-
-    function closeOnOutsideClick(event: MouseEvent) {
-      if (!containerRef.current?.contains(event.target as Node)) setIsOpen(false);
-    }
-    function closeOnEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") setIsOpen(false);
-    }
-
-    document.addEventListener("mousedown", closeOnOutsideClick);
-    document.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.removeEventListener("mousedown", closeOnOutsideClick);
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [isOpen]);
+  useDismiss(containerRef, isOpen, () => setIsOpen(false));
 
   return (
     <div ref={containerRef} className="relative">
