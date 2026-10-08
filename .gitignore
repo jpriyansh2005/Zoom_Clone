@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# SQLite database files (created at runtime, re-seeded on first start)
+*.db
+*.db-journal
+*.sqlite3
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+
+# Environment files (keep the *.example templates)
+.env
+.env.local
+.env.*.local
+
+# Editors, OS and local tooling
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.claude/
+.playwright-mcp/
+.vercel/
