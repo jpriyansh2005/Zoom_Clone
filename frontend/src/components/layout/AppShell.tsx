@@ -112,9 +112,9 @@ function TopBar({ onPlaceholder }: { onPlaceholder: PlaceholderFactory }) {
         <ZoomLogo variant="stacked" />
       </Link>
 
-      <DisabledSearchControls />
+      <TopBarCenter onPlaceholder={onPlaceholder} />
 
-      <div className="ml-auto flex items-center justify-end gap-2 md:w-[170px] md:pr-3.5">
+      <div className="flex items-center justify-end gap-2 md:w-[170px] md:pr-3.5">
         <button
           type="button"
           aria-label="Notifications"
@@ -149,26 +149,56 @@ function TopBar({ onPlaceholder }: { onPlaceholder: PlaceholderFactory }) {
   );
 }
 
+/** Greyed-out look shared by the controls that are switched off. */
+const SWITCHED_OFF = "hidden items-center text-ink/40 select-none sm:flex";
+
 /**
- * Zoom's history arrows, search field and "+" button, in the middle of the
- * top bar. This project has no search or history, so they are drawn greyed
- * out and switched off: `inert` makes everything inside unclickable and
- * skips it for the keyboard and for screen readers.
+ * The middle of the top bar. Zoom's back and forward arrows and its search
+ * field have no job in this project, so they are drawn greyed out and
+ * switched off: `inert` makes an element unclickable and skips it for the
+ * keyboard and for screen readers. The "+" menu works: it offers the same
+ * three actions as the tiles on the home screen.
  */
-function DisabledSearchControls() {
+function TopBarCenter({ onPlaceholder }: { onPlaceholder: PlaceholderFactory }) {
+  const { startInstantMeeting, openJoinDialog, openScheduleDialog } = useDashboard();
+
   return (
-    <div
-      inert
-      className="hidden min-w-0 flex-1 items-center justify-center gap-3 text-ink/40 select-none sm:flex"
-    >
-      <ChevronLeft size={18} />
-      <ChevronRight size={18} />
-      <History size={17} />
-      <span className="mx-1 flex h-[29px] min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg bg-chrome-field/60 text-[13px] md:max-w-[447px]">
+    <div className="flex min-w-0 flex-1 items-center justify-center gap-1.5">
+      <span inert className={cn(SWITCHED_OFF, "gap-3 px-1.5")}>
+        <ChevronLeft size={18} />
+        <ChevronRight size={18} />
+      </span>
+      <button
+        type="button"
+        aria-label="History"
+        onClick={onPlaceholder("History")}
+        className={cn(BAR_BUTTON, "hidden sm:flex")}
+      >
+        <History size={17} />
+      </button>
+
+      <span
+        inert
+        className={cn(
+          SWITCHED_OFF,
+          "mx-1 h-[29px] min-w-0 flex-1 justify-center gap-1.5 rounded-lg bg-chrome-field/60 text-[13px] md:max-w-[447px]",
+        )}
+      >
         <Search size={13} />
         Search (Ctrl+E)
       </span>
-      <Plus size={18} />
+
+      <DropdownMenu
+        label="New"
+        align="left"
+        triggerClassName={BAR_BUTTON}
+        trigger={<Plus size={18} />}
+        items={[
+          { label: "New meeting", onSelect: startInstantMeeting },
+          { label: "Join a meeting", onSelect: openJoinDialog },
+          { label: "Schedule a meeting", onSelect: () => openScheduleDialog() },
+        ]}
+      />
     </div>
   );
 }
