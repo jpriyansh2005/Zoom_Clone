@@ -19,8 +19,8 @@ export function ZoomLogo({ variant, className }: ZoomLogoProps) {
       <span
         className={cn("inline-flex flex-col items-start leading-none text-ink select-none", className)}
       >
-        <Wordmark className="h-[9px]" />
-        <span className="mt-[3px] text-[13px] leading-none font-bold tracking-tight">Workplace</span>
+        <Wordmark className="h-[10px]" />
+        <span className="mt-[3px] text-[15px] leading-none font-bold tracking-tight">Workplace</span>
       </span>
     );
   }
