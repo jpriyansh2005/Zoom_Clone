@@ -8,8 +8,8 @@ Built for the Scaler SDE Fullstack assignment.
 
 | | |
 |---|---|
-| **Live app** | _add the Vercel URL after deploying_ |
-| **API** | _add the Render URL after deploying_ |
+| **Live app** | https://zoom-clone-eight-sigma.vercel.app |
+| **API** | https://zoom-clone-api-k4vk.onrender.com ([docs](https://zoom-clone-api-k4vk.onrender.com/docs)) |
 
 ![Dashboard](docs/screenshots/dashboard.png)
 
@@ -23,7 +23,7 @@ Built for the Scaler SDE Fullstack assignment.
 
 | Requirement | Where to see it |
 |---|---|
-| **Landing dashboard** with Zoom's look | Home: Zoom Workplace's top bar (search, notifications, profile menu) and navigation rail (settings at the bottom); clock; New meeting, Join, Schedule and Share screen tiles |
+| **Landing dashboard** with Zoom's look | Home: Zoom Workplace's top bar (notifications and profile menu; Zoom's search and history controls are shown switched off) and navigation rail (settings at the bottom); clock; New meeting, Join, Schedule and Share screen tiles |
 | Upcoming meetings section | The calendar card on Home, grouped by day, with Today / previous / next day controls; full list under Meetings > Upcoming |
 | Recent meetings section | "Recent meetings" on Home; full list under Meetings > Previous |
 | **Instant meeting**: unique ID, invite link, redirect to the room | New meeting creates an 11-digit meeting ID and a `/j/{id}` link, then opens the room |

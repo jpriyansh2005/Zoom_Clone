@@ -20,7 +20,7 @@ import {
   Video,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { useDashboard } from "@/components/dashboard/DashboardProvider";
@@ -50,11 +50,15 @@ const EXTRA_ITEMS: NavItem[] = [
 ];
 
 const BAR_BUTTON =
-  "flex size-7 items-center justify-center rounded-md text-ink hover:bg-chrome-hover";
+  "flex size-8 items-center justify-center rounded-md text-ink hover:bg-chrome-hover";
 
 /**
  * The frame of Zoom Workplace: a grey top bar and navigation rail around a
  * white page. On phones the rail becomes a tab bar along the bottom.
+ *
+ * Sizes come from Zoom's own screenshot of its home tab, which was taken
+ * at 175% display scaling: the top bar is 74 screen pixels tall there and
+ * the rail 149 wide, which is 42px and 85px at normal scale.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const showToast = useToast();
@@ -67,10 +71,10 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex min-h-0 flex-1">
         <nav
           aria-label="Main"
-          className="hidden w-[75px] shrink-0 flex-col items-center gap-1 px-1.5 pt-0.5 pb-3 md:flex"
+          className="hidden w-[85px] shrink-0 flex-col items-center gap-1 pt-0.5 pb-3 md:flex"
         >
           <NavItems items={MAIN_ITEMS} onPlaceholder={placeholder} />
-          <span aria-hidden className="my-1 h-px w-12 bg-[#c3c7cd]" />
+          <span aria-hidden className="my-1 h-px w-14 bg-[#c3c7cd]" />
           <NavItems items={EXTRA_ITEMS} onPlaceholder={placeholder} />
           <button
             type="button"
@@ -78,7 +82,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             onClick={placeholder("Settings")}
             className={cn(BAR_BUTTON, "mt-auto")}
           >
-            <Settings size={16} />
+            <Settings size={18} />
           </button>
         </nav>
 
@@ -100,83 +104,31 @@ export function AppShell({ children }: { children: ReactNode }) {
 type PlaceholderFactory = (feature: string) => () => void;
 
 function TopBar({ onPlaceholder }: { onPlaceholder: PlaceholderFactory }) {
-  const router = useRouter();
-  const { user, startInstantMeeting, openJoinDialog, openScheduleDialog } = useDashboard();
+  const { user } = useDashboard();
 
   return (
-    <header className="flex h-10 shrink-0 items-center gap-2 px-3 md:h-9 md:px-0">
-      <Link href="/" aria-label="Zoom Workplace home" className="rounded-md md:w-[150px] md:pl-5">
+    <header className="flex h-11 shrink-0 items-center gap-2 px-3 md:h-[42px] md:px-0">
+      <Link href="/" aria-label="Zoom Workplace home" className="rounded-md md:w-[170px] md:pl-[22px]">
         <ZoomLogo variant="stacked" />
       </Link>
 
-      <div className="flex min-w-0 flex-1 items-center justify-center gap-1.5">
-        <button
-          type="button"
-          aria-label="Back"
-          onClick={() => router.back()}
-          className={cn(BAR_BUTTON, "hidden sm:flex")}
-        >
-          <ChevronLeft size={16} />
-        </button>
-        <button
-          type="button"
-          aria-label="Forward"
-          onClick={() => router.forward()}
-          className={cn(BAR_BUTTON, "hidden sm:flex")}
-        >
-          <ChevronRight size={16} />
-        </button>
-        <button
-          type="button"
-          aria-label="History"
-          onClick={onPlaceholder("History")}
-          className={cn(BAR_BUTTON, "hidden sm:flex")}
-        >
-          <History size={15} />
-        </button>
+      <DisabledSearchControls />
 
-        <label className="relative mx-1 hidden h-[26px] min-w-0 flex-1 sm:block md:max-w-[392px]">
-          <span className="sr-only">Search</span>
-          <input
-            type="search"
-            placeholder=" "
-            className="peer size-full rounded-lg bg-chrome-field px-3 text-center text-[12px] text-ink focus:bg-white focus:outline-none"
-          />
-          {/* Shown while the box is empty, centred like Zoom's search field. */}
-          <span className="pointer-events-none absolute inset-0 hidden items-center justify-center gap-1.5 text-[12px] text-ink peer-placeholder-shown:flex peer-focus:hidden">
-            <Search size={12} />
-            Search (Ctrl+E)
-          </span>
-        </label>
-
-        <DropdownMenu
-          label="New"
-          align="left"
-          triggerClassName={BAR_BUTTON}
-          trigger={<Plus size={16} />}
-          items={[
-            { label: "New meeting", onSelect: startInstantMeeting },
-            { label: "Join a meeting", onSelect: openJoinDialog },
-            { label: "Schedule a meeting", onSelect: () => openScheduleDialog() },
-          ]}
-        />
-      </div>
-
-      <div className="flex items-center justify-end gap-1.5 md:w-[150px] md:pr-3">
+      <div className="ml-auto flex items-center justify-end gap-2 md:w-[170px] md:pr-3.5">
         <button
           type="button"
           aria-label="Notifications"
           onClick={onPlaceholder("Notifications")}
           className={cn(BAR_BUTTON, "relative")}
         >
-          <Bell size={15} />
-          <span className="absolute top-1 right-1 size-1.5 rounded-full bg-zoom-red" />
+          <Bell size={17} />
+          <span className="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-zoom-red" />
         </button>
 
         <DropdownMenu
           label="Profile menu"
           triggerClassName="block rounded-[28%]"
-          trigger={<Avatar name={user?.name ?? "?"} size={24} />}
+          trigger={<Avatar name={user?.name ?? "?"} size={28} />}
           header={
             <div className="flex items-center gap-3">
               <Avatar name={user?.name ?? "?"} size={40} />
@@ -197,6 +149,30 @@ function TopBar({ onPlaceholder }: { onPlaceholder: PlaceholderFactory }) {
   );
 }
 
+/**
+ * Zoom's history arrows, search field and "+" button, in the middle of the
+ * top bar. This project has no search or history, so they are drawn greyed
+ * out and switched off: `inert` makes everything inside unclickable and
+ * skips it for the keyboard and for screen readers.
+ */
+function DisabledSearchControls() {
+  return (
+    <div
+      inert
+      className="hidden min-w-0 flex-1 items-center justify-center gap-3 text-ink/40 select-none sm:flex"
+    >
+      <ChevronLeft size={18} />
+      <ChevronRight size={18} />
+      <History size={17} />
+      <span className="mx-1 flex h-[29px] min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg bg-chrome-field/60 text-[13px] md:max-w-[447px]">
+        <Search size={13} />
+        Search (Ctrl+E)
+      </span>
+      <Plus size={18} />
+    </div>
+  );
+}
+
 function NavItems({
   items,
   onPlaceholder,
@@ -209,13 +185,13 @@ function NavItems({
   return items.map(({ label, icon: Icon, href }) => {
     const isActive = href === pathname;
     const className = cn(
-      "flex h-12 w-[63px] flex-col items-center justify-center gap-1 rounded-lg text-ink transition-colors",
+      "flex h-[55px] w-[72px] flex-col items-center justify-center gap-1.5 rounded-lg text-ink transition-colors",
       isActive ? "bg-white" : "hover:bg-chrome-hover",
     );
     const content = (
       <>
-        <Icon size={17} strokeWidth={1.75} />
-        <span className="text-[10px] leading-none">{label}</span>
+        <Icon size={19} strokeWidth={1.75} />
+        <span className="text-[11px] leading-none">{label}</span>
       </>
     );
 
